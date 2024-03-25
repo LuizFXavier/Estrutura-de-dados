@@ -1,26 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include "heap.h"
 
 int pai(int filho);
-int filho_esq(int pai);
-int filho_dir(int pai);
-void gerar_heap(int*lista, int max_size);
-void desce(int pai, int*lista, int n);
 
-int main(void){
-    int v[7] = { 88,3,92,4,15,81,51};
-
-    gerar_heap(v,7);
-
-    for (int i = 6; i >= 0; i--){
-        for(int j = 0; j < i; j++){
-            printf(" ");
-        }
-        printf("%d\n",v[i]);
-    }
-
-    return EXIT_SUCCESS;
+int pai(int filho){
+    return (filho - 1) / 2;
 }
 
 void gerar_heap(int*lista, int max_size){
@@ -45,7 +31,7 @@ void desce(int n, int*lista, int max){
         maior_filho = n;
     }
     
-    if (maior_filho != pai && lista[maior_filho] > lista[pai]){
+    if (maior_filho != n && lista[maior_filho] > lista[n]){
         
         troca(lista, n, maior_filho);
         desce(maior_filho, lista, max);
@@ -56,7 +42,7 @@ void alterar_prioridade(int v[], int pos, int valor, int tam){
     if (pos < tam){
         v[pos] = valor;
         sobe(v, pos);
-        desce(pos, v, tam)
+        desce(pos, v, tam);
     }
 }
 
@@ -65,9 +51,9 @@ void inserir_elemento(int v[], int *tam, int max, int valor){
         return;
     }
 
-    v[tam] = valor; // O tamanho do vetor é também o valor do endereço da última posição dele
+    v[*tam] = valor; // O tamanho do vetor é também o valor do endereço da última posição dele
 
-    sobe(tam);
+    sobe(v,tam);
 
     *tam += 1;
 }
@@ -81,13 +67,17 @@ int acessa_max(int v[]){
 }
 
 int extrair_max(int v[], int* tam){
-    v[0] = v[tam - 1];
+
+    int max = v[0];
+    v[0] = v[*tam - 1];
     *tam -= 1;
-    desce(v,0)
+    desce(v,0,tam - 1);
+
+    return max;
 }
 
 void sobe(int v[], int n){
-    int pai = pai(n);
+    int pai = (n - 1) / 2;
 
     if(v[pai] < v[n]){
         troca(v, n, pai);
@@ -95,15 +85,13 @@ void sobe(int v[], int n){
     }
 }
 
-void troca(v[], n, m){
+void troca(int v[], int n, int m){
     int aux = v[n];
     v[n] = v[m];
     v[m] = aux;
 }
 
-int pai(int filho){
-    return (filho - 1) / 2;
-}
+
 
 int filho_esq(int pai){
     return (pai * 2) + 1;
