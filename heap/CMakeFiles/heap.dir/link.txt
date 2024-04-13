@@ -1,0 +1,1 @@
+/usr/sbin/cc CMakeFiles/heap.dir/src/heap.c.o CMakeFiles/heap.dir/src/main.c.o -o heap 
