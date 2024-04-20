@@ -1,3 +1,0 @@
-/mnt/sda1/Projetinhos/ED/Estrutura-de-dados/heap/CMakeFiles/heap.dir
-/mnt/sda1/Projetinhos/ED/Estrutura-de-dados/heap/CMakeFiles/edit_cache.dir
-/mnt/sda1/Projetinhos/ED/Estrutura-de-dados/heap/CMakeFiles/rebuild_cache.dir
