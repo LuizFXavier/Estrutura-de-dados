@@ -181,3 +181,75 @@ void *busca_no(t_avl *arv, t_no *no_atual, void *reg)
         return no_atual->reg;
     }
 }
+
+void * remove_AVL(t_avl* arv, void* item){
+    
+    return _remove_no(arv, &arv->raiz, item);
+    
+}
+
+void * _remove_no(t_avl* arv, t_no** no, void* item){
+
+    
+    void* ret = NULL;
+    t_no* aux = *no;
+
+    if(arv->cmp((*no)->reg, item) < 0){
+        if((*no)->dir){
+
+            ret = _remove_no(arv, &((*no)->dir), item);
+        }
+    }
+    else if(arv->cmp((*no)->reg, item) > 0){
+        
+        if((*no)->esq){
+
+            ret = _remove_no(arv, &((*no)->esq), item);
+        }
+    }
+    else{
+        ret = (*no)->reg;
+
+        if(!(*no)->esq && !(*no)->dir){
+            free(*no);
+            *no = NULL;
+            
+        }
+
+        else if(!(*no)->esq || !(*no)->dir){
+            
+            if((*no)->esq){
+                *no = (*no)->esq;
+            }
+            else{
+                *no = (*no)->dir;
+            }
+            free(aux);
+        }else{
+            
+            t_no** sucessor = percorre_esq(&(*no)->dir);
+            (*no)->reg = (*sucessor)->reg;
+            _remove_no(arv, &(*no)->dir, (*sucessor)->reg);
+        }
+
+    }
+    if(*no != NULL){
+        (*no)->altura = max(altura_no((*no)->esq), altura_no((*no)->dir)) + 1;
+        rebalanceia(no);
+    }
+
+
+    return ret;
+}
+
+t_no** percorre_esq(t_no** sub_arv){
+    t_no** ret = sub_arv;
+
+    while ((*ret)->esq)
+    {
+        *ret = (*ret)->esq;
+    }
+
+    return ret;
+    
+}

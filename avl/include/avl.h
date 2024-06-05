@@ -24,6 +24,9 @@ void rot_esq(t_no** sub_arv);
 void rot_dir(t_no** sub_arv);
 void * busca_AVL(t_avl* arv, void* reg);
 void * busca_no(t_avl* arv, t_no* no_atual, void* reg);
+t_no** percorre_esq(t_no** sub_arv);
+void * remove_AVL(t_avl* arv, void* item);
+void * _remove_no(t_avl* arv, t_no** no, void* item);
 void destroi_AVL(t_no* no);
 
 void percorre(t_no* no);
